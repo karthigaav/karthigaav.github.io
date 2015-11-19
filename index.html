@@ -131,7 +131,7 @@ xhr.onload = function () {
 	alertArray[i].setMap(null);
 	}
     alertArray = [];
-	   for(i=0; i < Object.keys(alert["entity"]).length;i++) {
+	   for(i=0; i < Object.keys(alert["entity"][i].header.length);i++) {
 	   if(Object.keys(alert["entity"][i] != alertArray[i])
 	   console.log(alert["entity"][i]);
 	   
