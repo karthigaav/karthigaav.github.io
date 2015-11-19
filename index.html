@@ -72,14 +72,19 @@ function initMap() {
   map.data.addListener('click', function(event){
 										text = "";
 										var i;
+										
 										for(i=0; i < Object.keys(trips["entity"]).length;i++){
 											var j;
 											for(j=0; j < Object.keys(trips["entity"][i].trip_update.stop_time_update).length;j++){
 												if (trips["entity"][i].trip_update.stop_time_update[j].stop_id == event.feature.getProperty('stop_id')){
-													text = text + '<br>' + trips["entity"][i].trip_update.vehicle.label + " : "+ new Date().toLocaleTimeString(trips["entity"][i].trip_update.stop_time_update[j].arrival.time)}}		
+													var d = new Date(1970,0,1);
+													var t;
+													d.setSeconds(trips["entity"][i].trip_update.stop_time_update[j].arrival.time)
+													d.setHours(d.getHours() - 5)
+													t = d.toLocaleTimeString()
+													text = text + '<br>' + trips["entity"][i].trip_update.vehicle.label + " : "+ t}}		
 										}
-									document.getElementById('content-window').innerHTML =
-									event.feature.getProperty('stop_name') + text;
+									document.getElementById('content-window').innerHTML = "<span style='background-color:yellow'><b>" + event.feature.getProperty('stop_name') + "</b></span>" + text;
 									});
   
   var ctfastrakBounds = new google.maps.Polygon({
