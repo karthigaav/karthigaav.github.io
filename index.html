@@ -132,11 +132,11 @@ xhr.onload = function () {
 	}
     alertArray = [];
 	   for(i=0; i < Object.keys(alert["entity"]).length;i++) {
-	   if(Object.keys(alert["entity"][i] != alertArray[i]) {
+	   if(Object.keys(alert["entity"][i] != alertArray[i]) 
 	   temp = alertArray[i];
 	   alertArray[i] = Object.keys(alert["entity"][i]);
 	   window.alert(alertArray[i]);
-	   }
+	   
 	   }
 }
 xhr.send()
@@ -170,7 +170,7 @@ xhr.send()
 //Reload realtime data every 30 seconds
 setInterval(function(){getBusLocations()}, 30000);
 setInterval(function(){getTrips()}, 30000);
-
+setInterval(function(){getAlerts()}, 30000);
 
 	</script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKCfeZWk7iA9OXoLSWVpUfXoLm2ekRvgg&callback=initMap">
