@@ -82,7 +82,6 @@ function initMap() {
 												if (trips["entity"][i].trip_update.stop_time_update[j].stop_id == event.feature.getProperty('stop_id')){
 													text = text + '\n' + trips["entity"][i].trip_update.vehicle.label + " : "+ new Date().toLocaleTimeString(trips["entity"][i].trip_update.stop_time_update[j].arrival.time)}}		
 				
-											}
 										}
 									document.getElementById('content-window').textContent =
 									event.feature.getProperty('stop_name') + text;
