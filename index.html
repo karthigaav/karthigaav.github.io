@@ -28,7 +28,7 @@ var busArray = [];
 var alerts;
 var alertArray = [];
 var busArray = [];
-var temp;
+//var temp;
 
   
   
@@ -133,9 +133,10 @@ xhr.onload = function () {
     alertArray = [];
 	   for(i=0; i < Object.keys(alert["entity"]).length;i++) {
 	   if(Object.keys(alert["entity"][i] != alertArray[i])
-	   temp += "<li>" + alert["entity"][i] + "</li>";
+	   console.log(alert["entity"][i]);
+	   
 	    else 
-	    temp += "<li>" + alertArray[i] + "</li>";
+	    console.log(alertArray[i]);
 	  // temp = alertArray[i];
 	  // alertArray[i] = Object.keys(alert["entity"][i]);
 	   }
