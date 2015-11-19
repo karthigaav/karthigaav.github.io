@@ -133,15 +133,15 @@ xhr.onload = function () {
     alertArray = [];
 	   for(i=0; i < Object.keys(alert["entity"]).length;i++) {
 	   if(Object.keys(alert["entity"][i] != alertArray[i])
-	   text += "<li>" + alert["entity"][i] + "</li>";
+	   temp += "<li>" + alert["entity"][i] + "</li>";
 	    else 
-	    text += "<li>" + alertArray[i] + "</li>";
+	    temp += "<li>" + alertArray[i] + "</li>";
 	  // temp = alertArray[i];
 	  // alertArray[i] = Object.keys(alert["entity"][i]);
 	   }
-	   window.alert(alertArray[i]);
-	   text += "</ul>";
-    document.getElementById("demo").innerHTML = text;
+	   window.alert(temp);
+	   temp += "</ul>";
+    document.getElementById("demo").innerHTML = temp;
 }
 xhr.send()
 }
