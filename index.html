@@ -24,7 +24,10 @@
 var map;
 var ctfastrak;
 var trips;
+var alerts;
+var alertArray[];
 var busArray = [];
+var temp = [];
 
   
   
@@ -72,19 +75,18 @@ function initMap() {
   map.data.addListener('click', function(event){
 										text = "";
 										var i;
-										
+				
 										for(i=0; i < Object.keys(trips["entity"]).length;i++){
 											var j;
-											for(j=0; j < Object.keys(trips["entity"][i].trip_update.stop_time_update).length;j++){
+											for(j=0; j < Object.keys(trips["entity"][i].trip_update.stop_time_update).length;j++)
 												if (trips["entity"][i].trip_update.stop_time_update[j].stop_id == event.feature.getProperty('stop_id')){
-													var d = new Date(1970,0,1);
-													var t;
-													d.setSeconds(trips["entity"][i].trip_update.stop_time_update[j].arrival.time)
-													d.setHours(d.getHours() - 5)
-													t = d.toLocaleTimeString()
-													text = text + '<br>' + trips["entity"][i].trip_update.vehicle.label + " : "+ t}}		
+													text = text + '\n' + trips["entity"][i].trip_update.vehicle.label + " : "+ new Date().toLocaleTimeString(trips["entity"][i].trip_update.stop_time_update[j].arrival.time)}}		
+				
+											}
 										}
-									document.getElementById('content-window').innerHTML = "<span style='background-color:yellow'><b>" + event.feature.getProperty('stop_name') + "</b></span>" + text;
+									document.getElementById('content-window').textContent =
+									event.feature.getProperty('stop_name') + text;
+							
 									});
   
   var ctfastrakBounds = new google.maps.Polygon({
@@ -102,6 +104,7 @@ function initMap() {
   
   getTrips();  
   getBusLocations();
+  getAlerts();
 
 }
 
@@ -111,6 +114,26 @@ xhr.open("GET", "http://65.213.12.244/realtimefeed/tripupdate/tripupdates.json",
 xhr.onload = function () {
 	trips = eval("("+ xhr.response +")");
 
+}
+xhr.send()
+}
+// Alert function
+function getAlerts(){
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://65.213.12.244/realtimefeed/alert/alerts.json", true);
+xhr.onload = function () {
+	var alerts = eval("("+ xhr.response +")");
+	var i;
+	for (var i=0; i < alertArray.length; i++){
+	alertArray[i].setMap(null);
+	}
+    alertArray = [];
+	   for(i=0; i < Object.keys(alert["entity"]).length;i++) {
+	   if(Object.keys(alert["entity"][i] != alertArray[i]) {
+	   temp = alertArray[i];
+	   alertArray[i] = Object.keys(alert["entity"][i]);
+	   console.log(alertArray[i]);
+	   }
 }
 xhr.send()
 }
