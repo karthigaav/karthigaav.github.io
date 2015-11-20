@@ -25,9 +25,9 @@ var map;
 var ctfastrak;
 var trips;
 var busArray = [];
-var alerts;
-var alertArray = [];
-var busArray = [];
+var alerts; // karthigaa added
+var alertArray = []; // karthigaa added 
+
 //var temp;
 
   
@@ -106,7 +106,7 @@ function initMap() {
   
   getTrips();  
   getBusLocations();
-  getAlerts();
+  getAlerts(); // karthigaa added 
 
 }
 
@@ -120,7 +120,7 @@ xhr.onload = function () {
 xhr.send()
 }
 
-// Alert function
+// Alert function by Karthigaa
 function getAlerts(){
 var xhr = new XMLHttpRequest();
 xhr.open("GET", "http://65.213.12.244/realtimefeed/alert/alerts.json", true);
@@ -146,6 +146,7 @@ xhr.onload = function () {
 }
 xhr.send()
 }
+
 
 function getBusLocations(){
 var xhr = new XMLHttpRequest();
