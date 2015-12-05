@@ -1,0 +1,64 @@
+html, body
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+		
+#map
+{
+	height: 100%;
+	width: 79%;
+	float: right;
+}
+
+#content-window
+{
+    
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	bottom: 0;
+	width: 300px;
+	background-color: green;
+    font-family: 'Helvetica';
+    height: 100%;
+    line-height: 30px;
+    padding-left: 5px;
+	padding-right: 5px;
+	transform: translate3d(-200px, 0, 0);
+	transition: transform 0.4s ease;
+    
+}
+
+#active-nav content-window {
+transform: translate3d(0, 0, 0);
+}
+
+#img[Attributes Style] 
+{
+height: 200px;
+width: 300px;
+}
+
+#nav-toggle-btn {
+display: block;
+position: absolute;
+left: 200px;
+width: 40px;
+height: 40px;
+background-color: #666;
+}
+
+#content-header
+{
+	background-color: red;
+	color: white;
+	text-align: center;
+}
+
+#content-content
+{
+	background-color: white;
+	text-align: center;
+}
