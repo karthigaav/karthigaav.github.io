@@ -18,13 +18,14 @@ html, body
 	z-index: 1000;
 	top: 0;
 	bottom: 0;
-	width: 300px;
+	width: 210px;
 	background-color: green;
     font-family: 'Helvetica';
     height: 100%;
     line-height: 30px;
     padding-left: 5px;
 	padding-right: 5px;
+	left: -240px;
 	transition: all .3s ease-in-out;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
@@ -79,11 +80,12 @@ float: right;
 	bottom: 0;
     padding-top: 300px;
 	height: 200px;
-	width: 300px;
+	width: 240px;
 	background-color: green;
 	text-align: center;
 	transition: all .3s ease-in-out;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
+	
 	
 }
