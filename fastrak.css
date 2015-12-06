@@ -9,82 +9,30 @@ html, body
 {
 	height: 100%;
 	width: 79%;
+	float: right;
 }
 
 #content-window
 {
-    
+    background-color: red;
 	position: fixed;
-	z-index: 1000;
-	top: 0;
-	bottom: 0;
-	width: 240px;
-	background-color: green;
     font-family: 'Helvetica';
     height: 100%;
     line-height: 30px;
     padding-left: 5px;
 	padding-right: 5px;
-	left: -240px;
-	transition: all .3s ease-in-out;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-ms-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
-    
-}
-
-#content-content #img
-{
-height: 200px;
-width: 300px;
-}
-
-#menu-icon {
-        padding: 10px 20px;
-		background: #E5DAC0;
-		color: #987D3E;
-		cursor: pointer;
-		float: right;
-}
-
-#menuToggle{
-display: none;
-position: absolute;
-left: 200px;
-width: 40px;
-height: 40px;
-background-color: red;
-float: right;
-}
-#menuToggle:checked ~ .content-window { 
-position: absolute; 
-left: 0;
-float: right;
-
+    width: 150px;
 }
 
 #content-header
 {
-	background-color: green;
-	color: White;
+	background-color: red;
+	color: white;
 	text-align: center;
-	float: left;
 }
 
 #content-content
 {
-    position: fixed;
-    z-index: 1000;
-	top: 0;
-	bottom: 0;
-    padding-top: 300px;
-	height: 200px;
-	width: 240px;
-	background-color: green;
+	background-color: white;
 	text-align: center;
-	transition: all .3s ease-in-out;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	
 }
