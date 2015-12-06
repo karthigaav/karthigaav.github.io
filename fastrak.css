@@ -57,7 +57,7 @@ height: 40px;
 background-color: red;
 float: right;
 }
-#menuToggle:checked ~ .content-content { 
+#menuToggle:checked ~ .content-window { 
 position: absolute; 
 left: 0;
 float: right;
