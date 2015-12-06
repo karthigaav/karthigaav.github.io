@@ -21,12 +21,18 @@ html, body
     line-height: 30px;
     padding-left: 5px;
 	padding-right: 5px;
-    width: 150px;
+    width: 250px;
+}
+
+#content-content .img
+{
+height: 200px;
+width: 300px;
 }
 
 #content-header
 {
-	background-color: red;
+	background-color: green;
 	color: white;
 	text-align: center;
 }
