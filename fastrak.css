@@ -26,20 +26,16 @@ html, body
 	z-index: 1000;
 	top: 0;
 	bottom: 0;
-	width: 300px;
+	width: 240px;
 	background-color: green;
     font-family: 'Helvetica';
     height: 100%;
     line-height: 30px;
     padding-left: 5px;
 	padding-right: 5px;
-	transform: translate3d(-200px, 0, 0);
-	transition: transform 0.4s ease;
+	left: -240px;
+	transition: all .3s ease-in-out;
     
-}
-
-#active-nav #content-window {
-transform: translate3d(0, 0, 0);
 }
 
 #content-content #img
@@ -48,19 +44,31 @@ height: 200px;
 width: 300px;
 }
 
-#nav-toggle-btn {
-display: block;
+#menu-icon {
+        padding: 10px 20px;
+		background: #E5DAC0;
+		color: #987D3E;
+		cursor: pointer;
+}
+
+#menuToggle{
+display: none;
 position: absolute;
 left: 200px;
 width: 40px;
 height: 40px;
 background-color: yellow;
 }
+#menuToggle:checked ~ .content-window { 
+position: absolute; 
+left: 0;
+
+}
 
 #content-header
 {
 	background-color: green;
-	color: black;
+	color: White;
 	text-align: center;
 }
 
@@ -72,12 +80,7 @@ background-color: yellow;
 	bottom: 0;
     padding-top: 300px;
 	height: 200px;
-	width: 200px;
+	width: 240px;
 	background-color: green;
 	text-align: center;
-	transition: transform 0.4s ease;
-}
-
-#active-nav #content-content {
-    transform: translate3d(200px, 0, 0);
 }
