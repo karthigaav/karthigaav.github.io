@@ -31,11 +31,11 @@ html, body
     
 }
 
-#active-nav content-window {
+#active-nav #content-window {
 transform: translate3d(0, 0, 0);
 }
 
-#img[Attributes Style] 
+#content-content #img
 {
 height: 200px;
 width: 300px;
@@ -52,13 +52,20 @@ background-color: #666;
 
 #content-header
 {
-	background-color: red;
-	color: white;
+	background-color: green;
+	color: black;
 	text-align: center;
 }
 
 #content-content
 {
-	background-color: white;
+    padding-top: 300px;
+	height: 200px;
+	background-color: green;
 	text-align: center;
+	transition: transform 0.4s ease;
+}
+
+#active-nav #content-content {
+    transform: translate3d(200px, 0, 0);
 }
