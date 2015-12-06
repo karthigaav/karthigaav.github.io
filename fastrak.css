@@ -49,6 +49,7 @@ width: 300px;
 		background: #E5DAC0;
 		color: #987D3E;
 		cursor: pointer;
+		float: right;
 }
 
 #menuToggle{
@@ -83,4 +84,5 @@ left: 0;
 	width: 240px;
 	background-color: green;
 	text-align: center;
+	transition: all .3s ease-in-out;
 }
