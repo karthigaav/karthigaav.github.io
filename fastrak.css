@@ -33,8 +33,12 @@ html, body
     line-height: 30px;
     padding-left: 5px;
 	padding-right: 5px;
-	left: -240px;
+	left: -240px;s
 	transition: all .3s ease-in-out;
+	-webkit-transition: all .3s ease-in-out;
+	-moz-transition: all .3s ease-in-out;
+	-ms-transition: all .3s ease-in-out;
+	-o-transition: all .3s ease-in-out;
     
 }
 
