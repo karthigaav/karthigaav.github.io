@@ -47,7 +47,7 @@ position: absolute;
 left: 200px;
 width: 40px;
 height: 40px;
-background-color: #666;
+background-color: yellow;
 }
 
 #content-header
@@ -59,8 +59,13 @@ background-color: #666;
 
 #content-content
 {
+    position: fixed;
+    z-index: 1000;
+	top: 0;
+	bottom: 0;
     padding-top: 300px;
 	height: 200px;
+	width: 200px;
 	background-color: green;
 	text-align: center;
 	transition: transform 0.4s ease;
