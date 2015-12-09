@@ -5,14 +5,11 @@ html, body
 	padding: 0;
 }
 
-#div
-{
-float:left;
-width:1000px;
-overflow-y: auto;
-height: 100px;
-overflow-y: auto;
-}
+ #wrapper {
+            height: 100%;
+            width: 200px;
+            overflow: auto;
+          }
 		
 #map
 {
