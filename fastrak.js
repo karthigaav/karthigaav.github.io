@@ -2,16 +2,21 @@
 var map;
 var ctfastrak;
 var trips;
-var validBusArray = ['711','712','1432','1434','1435','1437','1438','1441','1443','1444','1447','1450','1455','1457','1458','1463','1464','1465','1467','1472','1473','1476','A73','A77','A82']
+var validBusArray = ['711','712','1432','1434','1435','1437','1438','1441','1443','1444','1447','1448','1449','1450','1454','1455','1457','1458','1463','1464','1465','1467','1471','1472','1473','1475','1476','A73','A77','A82']
 var busArray = [];
 var alerts;
-var userLat;
-var userLng;
-var destinationLat; 
-var destinationLng; 
+var userLat
+var userLng
+var destinationLat
+var destinationLng
 var isInRange;
 var polygonCoords;
 var fastrakPolygon;
+var geocoder;
+var directionsDisplay;
+var directionsService
+var markers = [];
+var route = [];
 var busStops = [
                 {
                     "stop_id": 7984,
@@ -213,8 +218,6 @@ var busStops = [
                 }
             ];  
 
-  
-  
 
 function initMap() {
   //Create map object
@@ -223,25 +226,10 @@ function initMap() {
 							 zoom: 12
 							});
 							
-var centerControlDiv = document.createElement('div');
-var centerControl = new CenterControl(centerControlDiv, map);
-centerControlDiv.index = 1;
-map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+  geocoder = new google.maps.Geocoder();
 
-var destinationControlDiv = document.createElement('div');
-var destinationControl = new DestinationControl(destinationControlDiv, map);
-destinationControlDiv.index = 1;
-map.controls[google.maps.ControlPosition.TOP_CENTER].push(destinationControlDiv);
-
-var stopControlDiv = document.createElement('div');
-var stopControl = new StopControl(stopControlDiv, map);
-stopControlDiv.index = 1;
-map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(stopControlDiv);
-
-var routeControlDiv = document.createElement('div');
-var routeControl = new RouteControl(routeControlDiv, map);
-routeControlDiv.index = 1;
-map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(routeControlDiv);
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  directionsService = new google.maps.DirectionsService();
 				
   //Define CTFastrak boundary
   polygonCoords = [
@@ -265,30 +253,32 @@ map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(routeControlDiv);
   
   //Display CTFastrak KML attributes in 'content-window' div
   ctfastrak.addListener('click', function(kmlEvent){
+									document.getElementById('content-header').innerHTML = ""
 									var text = kmlEvent.featureData.name + '<br>' + kmlEvent.featureData.description;
 									showInContentWindow(text);
 									});
 
   //Send html to 'content-window' div
   function showInContentWindow(text) {
-	var contentWindow = document.getElementById('content-window')
+	var contentWindow = document.getElementById('content-content')
 	contentWindow.innerHTML = text;
 	};
 
   //Set map layer style for bus stops
   map.data.setStyle(function(feature){return({icon: {
         path: google.maps.SymbolPath.CIRCLE,
-        fillColor: 'red',
-        fillOpacity: .3,
-        strokeColor: 'white',
+        fillColor: 'yellow',
+        fillOpacity: .9,
+        strokeColor: 'black',
         strokeWeight: .5,
-        scale: 4
+        scale: 5
       }})});
 	  
 
   //Show approaching buses when a stop is clicked
   map.data.loadGeoJson('https://kvn-dly.github.io/fastrakStops.json');
   map.data.addListener('click', function(event){
+										document.getElementById('content-content').innerHTML = ""
 										divtext = "";
 										var i;
 										
@@ -316,8 +306,38 @@ map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(routeControlDiv);
   getTrips();  
   getBusLocations();
   getAlerts();
+  codeStart();
+  codeDestination();
 
 }
+
+function codeStart() {
+	if(!userLat){
+    var address = document.getElementById("start").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        userLat = results[0].geometry.location.lat().toString();
+		userLng = results[0].geometry.location.lng().toString();
+      } else {
+        alert("Invalid starting location");
+      }
+    });
+	}
+  }
+  
+
+function codeDestination() {
+	if(!destinationLat){
+    var address = document.getElementById("end").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        destinationLat = results[0].geometry.location.lat().toString();
+		destinationLng = results[0].geometry.location.lng().toString();
+      } else {
+        alert("Invalid destination");
+      }
+    });}
+  }
 
 function getTrips(){
 var xhr = new XMLHttpRequest();
@@ -363,32 +383,14 @@ setInterval(function(){getBusLocations()}, 30000);
 setInterval(function(){getTrips()}, 30000);
 //setInterval(function(){getAlerts()}, 30000);
 
-function DestinationControl(controlDiv, map) {
-	// Set CSS for the control border.
-	var controlUI = document.createElement('div');
-	controlUI.style.backgroundColor = '#fff';
-	controlUI.style.border = '2px solid #fff';
-	controlUI.style.borderRadius = '3px';
-	controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-	controlUI.style.cursor = 'pointer';
-	controlUI.style.marginBottom = '5dp';
-	controlUI.style.marginLeft = '5px';
-	controlUI.style.marginRight = '5px';
-	controlUI.style.textAlign = 'center';
-	controlUI.title = 'Pick your destination';
-	controlDiv.appendChild(controlUI);
-	// Set CSS for the control interior.
-	var controlText = document.createElement('div');
-	controlText.style.color = 'rgb(25,25,25)';
-	controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-	controlText.style.fontSize = 'Small';
-	controlText.style.lineHeight = '20dp';
-	controlText.style.paddingLeft = '3px';
-	controlText.style.paddingRight = '3px';
-	controlText.innerHTML = 'Pick Destination';
-	controlUI.appendChild(controlText);
-	controlUI.addEventListener('click', pickDestination);
+// Sets the map on all markers in the array.
+function clearTrip() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+	directionsDisplay.setMap(null);
+  }
 }
+
 /*
  * Allows the user to click on a location on the map to select thier location. 
  * Updates the global variables userLat and userLng to the position picked.
@@ -405,10 +407,10 @@ function pickDestination() {
 			destinationLat = e.latLng.lat().toString();
 			destinationLng = e.latLng.lng().toString();
 		} else {
-			console.log("Out of Range, please retry.");
+			alert("Out of Range, please retry.");
 		}
 		;
-		new google.maps.Marker({
+		markers.push(new google.maps.Marker({
 			position: e.latLng,
 			map: map,
 			icon: {
@@ -419,7 +421,7 @@ function pickDestination() {
 				strokeWeight: .5,
 				scale: 10
 			}
-		});
+		}));
 		console.log(isInRange);
 		console.log(destinationLat);
 		console.log(destinationLng);
@@ -427,89 +429,6 @@ function pickDestination() {
 	});
 }
 
-function RouteControl(controlDiv, map) {
-	// Set CSS for the control border.
-	var controlUI = document.createElement('div');
-	controlUI.style.backgroundColor = '#fff';
-	controlUI.style.border = '2px solid #fff';
-	controlUI.style.borderRadius = '3px';
-	controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-	controlUI.style.cursor = 'pointer';
-	controlUI.style.marginBottom = '5dp';
-	controlUI.style.marginLeft = '5px';
-	controlUI.style.marginRight = '5px';
-	controlUI.style.textAlign = 'center';
-	controlUI.title = 'Display the route';
-	controlDiv.appendChild(controlUI);
-	// Set CSS for the control interior.
-	var controlText = document.createElement('div');
-	controlText.style.color = 'rgb(25,25,25)';
-	controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-	controlText.style.fontSize = 'Small';
-	controlText.style.lineHeight = '20dp';
-	controlText.style.paddingLeft = '3px';
-	controlText.style.paddingRight = '3px';
-	controlText.innerHTML = 'Show Route';
-	controlUI.appendChild(controlText);
-	controlUI.addEventListener('click', displayRoute);
-//                controlUI.addEventListener('click', routeClosestBS);
-}
-function StopControl(controlDiv, map) {
-	// Set CSS for the control border.
-	var controlUI = document.createElement('div');
-	controlUI.style.backgroundColor = '#fff';
-	controlUI.style.border = '2px solid #fff';
-	controlUI.style.borderRadius = '3px';
-	controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-	controlUI.style.cursor = 'pointer';
-	controlUI.style.marginBottom = '5dp';
-	controlUI.style.marginLeft = '5px';
-	controlUI.style.marginRight = '5px';
-	controlUI.style.textAlign = 'center';
-	controlUI.title = 'Display route to the closest stop';
-	controlDiv.appendChild(controlUI);
-	// Set CSS for the control interior.
-	var controlText = document.createElement('div');
-	controlText.style.color = 'rgb(25,25,25)';
-	controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-	controlText.style.fontSize = 'Small';
-	controlText.style.lineHeight = '20dp';
-	controlText.style.paddingLeft = '3px';
-	controlText.style.paddingRight = '3px';
-	controlText.innerHTML = 'Show Closest Stop';
-	controlUI.appendChild(controlText);
-	controlUI.addEventListener('click', findStop);
-}
-
-/*
- * Custom button for pick location.
- */
-function CenterControl(controlDiv, map) {
-	// Set CSS for the control border.
-	var controlUI = document.createElement('div');
-	controlUI.style.backgroundColor = '#fff';
-	controlUI.style.border = '2px solid #fff';
-	controlUI.style.borderRadius = '3px';
-	controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-	controlUI.style.cursor = 'pointer';
-	controlUI.style.marginBottom = '5dp';
-	controlUI.style.marginLeft = '5px';
-	controlUI.style.marginRight = '5px';
-	controlUI.style.textAlign = 'center';
-	controlUI.title = 'Click your location on the map';
-	controlDiv.appendChild(controlUI);
-	// Set CSS for the control interior.
-	var controlText = document.createElement('div');
-	controlText.style.color = 'rgb(25,25,25)';
-	controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-	controlText.style.fontSize = 'Small';
-	controlText.style.lineHeight = '20dp';
-	controlText.style.paddingLeft = '10dp';
-	controlText.style.paddingRight = '10dp';
-	controlText.innerHTML = 'Pick Location';
-	controlUI.appendChild(controlText);
-	controlUI.addEventListener('click', pickLocation);
-}
 /*
  * Allows the user to click on a location on the map to select thier location. 
  * Updates the global variables userLat and userLng to the position picked.
@@ -526,10 +445,10 @@ function pickLocation() {
 			userLat = e.latLng.lat().toString();
 			userLng = e.latLng.lng().toString();
 		} else {
-			console.log("Out of Range, please retry.");
+			alert("Out of Range, please retry.");
 		}
 		;
-		new google.maps.Marker({
+		markers.push(new google.maps.Marker({
 			position: e.latLng,
 			map: map,
 			icon: {
@@ -540,7 +459,7 @@ function pickLocation() {
 				strokeWeight: .5,
 				scale: 10
 			}
-		});
+		}));
 		console.log(isInRange);
 		console.log(userLat);
 		console.log(userLng);
@@ -578,17 +497,17 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 function displayWalkRoute(startLat, startLng, endLat, endLng) {
 	var start = new google.maps.LatLng(startLat, startLng);
 	var end = new google.maps.LatLng(endLat, endLng);
-	var directionsDisplay = new google.maps.DirectionsRenderer();
 	directionsDisplay.setMap(map);
 	var request = {
 		origin: start,
 		destination: end,
 		travelMode: google.maps.TravelMode.WALKING
 	};
-	var directionsService = new google.maps.DirectionsService();
 	directionsService.route(request, function (response, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
 			directionsDisplay.setDirections(response);
+			document.getElementById('content-content').innerHTML = ""
+			directionsDisplay.setPanel(document.getElementById("content-content"));
 		}
 	});
 }
@@ -599,17 +518,17 @@ function displayWalkRoute(startLat, startLng, endLat, endLng) {
 function displayBusRoute(startLat, startLng, endLat, endLng) {
 	var start = new google.maps.LatLng(startLat, startLng);
 	var end = new google.maps.LatLng(endLat, endLng);
-	var directionsDisplay = new google.maps.DirectionsRenderer();
 	directionsDisplay.setMap(map);
 	var request = {
 		origin: start,
 		destination: end,
 		travelMode: google.maps.TravelMode.TRANSIT
 	};
-	var directionsService = new google.maps.DirectionsService();
 	directionsService.route(request, function (response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
 			directionsDisplay.setDirections(response);
+			document.getElementById('content-content').innerHTML = ""
+			directionsDisplay.setPanel(document.getElementById("content-content"));
 		}
 	});
 }
@@ -618,26 +537,36 @@ function displayBusRoute(startLat, startLng, endLat, endLng) {
  * Returns the index of the array with the closest stop.
  */
 function displayRoute() {
-	if(userLat === null || userLng === null || destinationLat === null || destinationLng === null){
-		console.log("Must select both location and destination");
-	} else {
+		codeStart();
+		codeDestination();
+		clearTrip();
+		if (!(google.maps.geometry.poly.containsLocation(new google.maps.LatLng({lat: parseFloat(userLat), lng: parseFloat(userLng)}), fastrakPolygon))){alert("Start location out of range, please try again.")}
+		else if (!(google.maps.geometry.poly.containsLocation(new google.maps.LatLng({lat: parseFloat(destinationLat), lng: parseFloat(destinationLng)}), fastrakPolygon))){alert("Destination location out of range, please try again.")}
+		else{
 		varStartIndex = calcClosestStop(userLat, userLng);
 		varDestIndex = calcClosestStop(destinationLat, destinationLng);
-//                    displayWalkRoute(userLat, userLat, busStops[varStartIndex].latitude, busStops[varStartIndex].longitude);
-		displayBusRoute(busStops[varStartIndex].latitude, busStops[varStartIndex].longitude, busStops[varDestIndex].latitude, busStops[varDestIndex].longitude);
-		displayWalkRoute(busStops[varDestIndex].latitude, busStops[varDestIndex].longitude, destinationLat, destinationLng);
+//      displayWalkRoute(userLat, userLat, busStops[varStartIndex].latitude, busStops[varStartIndex].longitude);
+//		displayBusRoute(busStops[varStartIndex].latitude, busStops[varStartIndex].longitude, busStops[varDestIndex].latitude, busStops[varDestIndex].longitude);
+		displayBusRoute(userLat, userLng, destinationLat, destinationLng);
+//		displayWalkRoute(busStops[varDestIndex].latitude, busStops[varDestIndex].longitude, destinationLat, destinationLng);
 		
-	}
+		  }
+	
 }
 /*
  * Automatically displays the route (by walking) to the closest busstop.
  */
 function findStop() {
+	codeStart();
+	try {
 	var closestI = calcClosestStop(userLat, userLng, busStops);
 	displayWalkRoute(userLat, userLng, busStops[closestI].latitude, busStops[closestI].longitude);
 	console.log(closestI);
 	console.log(busStops[closestI].latitude);
-	console.log(busStops[closestI].longitude);
+	console.log(busStops[closestI].longitude);}
+	catch(err){
+		alert("A nearby stop could not be found with the given location. Please try again.")
+}
 }
 function calcClosestStop(startLat, startLng) {
 	var minI;
