@@ -8,38 +8,40 @@ html, body
 #map
 {
 	height: 100%;
-	width: 79%;
+	width: 80%;
 	float: right;
 }
 
 #content-window
 {
-    background-color: green;
+    background-color: #00CC99;
 	position: fixed;
     font-family: 'Helvetica';
     height: 100%;
     line-height: 30px;
     padding-left: 5px;
 	padding-right: 5px;
-    width: 270px;
-	color: white;
-}
-
-#img
-{
-max-width: 100%;
+    width: 20%;
 }
 
 #content-header
 {
-	background-color: red;
+	background-color: #00CC99;
 	color: white;
 	text-align: center;
 }
 
 #content-content
 {
-	background-color: green;
+	background-color: white;
 	text-align: center;
-	color: white;
+}
+
+#route-form
+{
+	position: absolute;
+	display:block;
+	left: 21%;
+	top:10%;
+	background-color: white;
 }
