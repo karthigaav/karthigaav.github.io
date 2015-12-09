@@ -14,13 +14,13 @@ html, body
 
 #nav{ width: 20%; text-align: center;}
 
-#nav a:hover { background: #00CC99; color: white; }
+#nav a:hover { background: #00FFF; color: white; }
 
 .menu {
 	width: auto;
 	height: 100%;
 	position: absolute;
-	background: #00CC99;
+	background: #00FFFF;
 	left: -500px;
 	transition: all .3s ease-in-out;
 	-webkit-transition: all .3s ease-in-out;
@@ -31,7 +31,7 @@ html, body
 
 .menu_icon {
 	padding: 10px 20px;
-	background: #E5DAC0;
+	background: #00FFFF;
 	color: #98703E;
 	cursor: pointer;
 	float: right;
@@ -48,7 +48,7 @@ html, body
 }
 #content-window
 {
-    background-color: #00FF66;
+    background-color: #00FFFF;
 	position: fixed;
     font-family: 'Helvetica';
     height: 100%;
@@ -60,7 +60,7 @@ html, body
 
 #content-header
 {
-	background-color: #00FF66;
+	background-color: #00FFFF;
 	color: white;
 	text-align: center;
 	color: white;
@@ -75,7 +75,7 @@ html, body
 
 #content-content
 {
-	background-color: #00FF66;
+	background-color: #00FFFF;
 	text-align: center;
 	color: white;
 }
@@ -86,5 +86,5 @@ html, body
 	display:block;
 	left: 21%;
 	top:10%;
-	background-color: #CCFFCC;
+	background-color: #99CCFF;
 }
