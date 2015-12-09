@@ -14,13 +14,13 @@ html, body
 
 #nav{ width: 20%; text-align: center;}
 
-#nav a:hover { background: #99CCFF; color: white; }
+#nav a:hover { background: #CCCC99; color: white; }
 
 .menu {
 	width: auto;
 	height: 100%;
 	position: absolute;
-	background: #99CCFF;
+	background: #CCCC99;
 	left: -500px;
 	transition: all .3s ease-in-out;
 	-webkit-transition: all .3s ease-in-out;
@@ -31,7 +31,7 @@ html, body
 
 .menu_icon {
 	padding: 10px 20px;
-	background: #99CCFF;
+	background: #CCCC99;
 	color: #98703E;
 	cursor: pointer;
 	float: right;
@@ -48,7 +48,7 @@ html, body
 }
 #content-window
 {
-    background-color: #99CCFF;
+    background-color: #CCCC99;
 	position: fixed;
     font-family: 'Helvetica';
     height: 100%;
@@ -60,7 +60,7 @@ html, body
 
 #content-header
 {
-	background-color: #99CCFF;
+	background-color: #CCCC99;
 	color: white;
 	text-align: center;
 	color: white;
@@ -75,7 +75,7 @@ html, body
 
 #content-content
 {
-	background-color: #99CCFF;
+	background-color: #CCCC99;
 	text-align: center;
 	color: white;
 }
