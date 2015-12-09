@@ -7,7 +7,7 @@ html, body
 
  #wrapper {
             height: 100%;
-            width: 271.188px;
+            width: auto;
             overflow: auto;
           }
 		
