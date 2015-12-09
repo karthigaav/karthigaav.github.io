@@ -22,6 +22,11 @@ html, body
 	position: absolute;
 	background: #00CC99;
 	left: -500px;
+	transition: all .3s ease-in-out;
+	-webkit-transition: all .3s ease-in-out;
+	-moz-transition: all .3s ease-in-out;
+	-ns-transition: all .3s ease-in-out;
+	-o-transition: all .3s ease-in-out;
 }
 
 .menu_icon {
