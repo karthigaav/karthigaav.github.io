@@ -21,6 +21,24 @@ html, body
 	height: 100%;
 	position: absolute;
 	background: #00CC99;
+	left: -240px;
+}
+
+.menu_icon {
+	padding: 10px 20px;
+	background: #E5DAC0;
+	color: #98703E;
+	cursor: pointer;
+	float: right;
+}
+
+#menuToggle {
+	display: none;
+}
+
+#menuToggle:checked ~ .menu {
+	position: absolute;
+	left: 0;
 }
 #content-window
 {
