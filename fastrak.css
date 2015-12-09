@@ -12,7 +12,7 @@ html, body
 	float: right;
 }
 
-#nav{ width: 100%; text-align: center;}
+#nav{ width: 20%; text-align: center;}
 
 #nav a:hover { background: #00CC99; color: white; }
 
