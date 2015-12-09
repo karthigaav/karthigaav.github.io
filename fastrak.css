@@ -17,7 +17,7 @@ html, body
 #nav a:hover { background: #00CC99; color: white; }
 
 .menu {
-	width: 100%;
+	width: auto;
 	height: 100%;
 	position: absolute;
 	background: #00CC99;
