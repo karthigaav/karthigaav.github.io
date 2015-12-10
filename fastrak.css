@@ -12,9 +12,6 @@ html, body
 	float: right;
 }
 
-#nav{ width: 20%; text-align: center;}
-
-#nav a:hover { background: #CCCC99; color: white; }
 
 .menu {
 	width: auto;
@@ -57,6 +54,8 @@ html, body
 	padding-right: 5px;
     width: 20%;
 }
+
+#content-window a:hover { background: #CCCC99; color: white; }
 
 #content-header
 {
