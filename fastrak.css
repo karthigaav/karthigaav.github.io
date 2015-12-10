@@ -62,7 +62,7 @@ html, body
 	background-color: #CCCC99;
 	color: white;
 	text-align: center;
-	color: white;
+	color: black;
 }
 
  #wrapper {
@@ -76,7 +76,7 @@ html, body
 {
 	background-color: #CCCC99;
 	text-align: center;
-	color: white;
+	color: black;
 }
 
 #route-form
