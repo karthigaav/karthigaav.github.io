@@ -85,5 +85,5 @@ html, body
 	display:block;
 	left: 21%;
 	top:10%;
-	background-color: #99CCFF;
+	filter: alpha(opacity: 0.52;);
 }
