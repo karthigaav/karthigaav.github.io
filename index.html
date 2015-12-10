@@ -8,16 +8,19 @@
   </head>
   <body>
     <div id="map"></div>
+	<div id="map"></div>
 	<div id="route-form">
 	<span>Enter a starting address</span>
 	<br>
     <input id="start" type="textbox" value="1615 Stanley St, New Britain, CT">
+    <input type="button" value="Set Address" onclick="codeStart()">
     <input type="button" value="Pick from Map" onclick="pickLocation()">
     <input type="button" value="Show Closest Stop" onclick="findStop()">
 	<br>
 	<span>Enter a destination address</span>
 	<br>
 	<input id="end" type="textbox" value="Park Plaza Shopping Center, Hartford, CT">
+    <input type="button" value="Set Address" onclick="codeDestination()">
     <input type="button" value="Pick from Map" onclick="pickDestination()">
     <input type="button" value="Calculate Trip" onclick="displayRoute()">
     </div>
