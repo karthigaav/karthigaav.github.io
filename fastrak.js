@@ -312,17 +312,17 @@ function initMap() {
 }
 
 function codeStart() {
-	if(!userLat){
     var address = document.getElementById("start").value;
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        userLat = results[0].geometry.location.lat().toString();
-		userLng = results[0].geometry.location.lng().toString();
+		  if(google.maps.geometry.poly.containsLocation(results[0].geometry.location, fastrakPolygon)){
+			  userLat = results[0].geometry.location.lat().toString();
+			  userLng = results[0].geometry.location.lng().toString();
+		  }else{alert("Start location out of range, please try again.")}
       } else {
         alert("Invalid starting location");
       }
     });
-	}
   }
   
 
@@ -331,8 +331,10 @@ function codeDestination() {
     var address = document.getElementById("end").value;
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        destinationLat = results[0].geometry.location.lat().toString();
-		destinationLng = results[0].geometry.location.lng().toString();
+		  if(google.maps.geometry.poly.containsLocation(results[0].geometry.location, fastrakPolygon)){
+			  destinationLat = results[0].geometry.location.lat().toString();
+			  destinationLng = results[0].geometry.location.lng().toString();
+		  }else{alert("Destination location out of range, please try again.")}
       } else {
         alert("Invalid destination");
       }
@@ -537,27 +539,19 @@ function displayBusRoute(startLat, startLng, endLat, endLng) {
  * Returns the index of the array with the closest stop.
  */
 function displayRoute() {
-		codeStart();
-		codeDestination();
 		clearTrip();
-		if (!(google.maps.geometry.poly.containsLocation(new google.maps.LatLng({lat: parseFloat(userLat), lng: parseFloat(userLng)}), fastrakPolygon))){alert("Start location out of range, please try again.")}
-		else if (!(google.maps.geometry.poly.containsLocation(new google.maps.LatLng({lat: parseFloat(destinationLat), lng: parseFloat(destinationLng)}), fastrakPolygon))){alert("Destination location out of range, please try again.")}
-		else{
-		varStartIndex = calcClosestStop(userLat, userLng);
-		varDestIndex = calcClosestStop(destinationLat, destinationLng);
+//		varStartIndex = calcClosestStop(userLat, userLng);
+//		varDestIndex = calcClosestStop(destinationLat, destinationLng);
 //      displayWalkRoute(userLat, userLat, busStops[varStartIndex].latitude, busStops[varStartIndex].longitude);
 //		displayBusRoute(busStops[varStartIndex].latitude, busStops[varStartIndex].longitude, busStops[varDestIndex].latitude, busStops[varDestIndex].longitude);
 		displayBusRoute(userLat, userLng, destinationLat, destinationLng);
 //		displayWalkRoute(busStops[varDestIndex].latitude, busStops[varDestIndex].longitude, destinationLat, destinationLng);
-		
-		  }
 	
 }
 /*
  * Automatically displays the route (by walking) to the closest busstop.
  */
 function findStop() {
-	codeStart();
 	try {
 	var closestI = calcClosestStop(userLat, userLng, busStops);
 	displayWalkRoute(userLat, userLng, busStops[closestI].latitude, busStops[closestI].longitude);
